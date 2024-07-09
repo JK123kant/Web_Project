@@ -1,71 +1,88 @@
-<html>
-    <head>
-        <title>Discussion App</title>
-        <link rel="stylesheet" href="discussion.css">
-    </head>
-    <body>
-        <div id="container">
-            
-            <h1 class="mainheading">Discussion Portal</h1>
-            <div class="leftpane">
-                <div class="row">
-            
-                <button id="btn" type="submit" onclick="myFunction()">New Question Form</button>
-                <input type="search" id="searchbox" placeholder="search question">
-            
-                <div id="question_container">
-                   <h2 id="question_hadding"></h2> 
-                   <p id="addquestion" ></p>
-               </div>
-            </div>
+<!DOCTYPE html>
+
+<head>
+
+    <link rel="stylesheet" href="discussion (1).css" type="text/css">
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="heading">
+            <span> Discussion Portal </span>
         </div>
-        <div class="rightpane">
-             <div id="welcome_page">
-                 <p><span style="font-size: x-large; font-weight: 700;">Welcome To Discussion Portal !</span><br>
-                  Enter a subject and question to get started</p>
-               
-                  <div>
-                    <input type="text" id="inputbox" placeholder="Subject" ><br>
-                    <textarea id="textarea" placeholder="Question" ></textarea><br>
-                    <button type="submit" id="btn1" onclick="submit_question()" value="submit">Submit</button>
-                 </div>
 
-            </div>     
-        <div id="response_form" class="hidden">
-              <span style="color: rgb(66, 196, 251); font-size:30px;">Question</span>
+        <div class="sub-container">
+            <div class="left">
+                <div class="question-form">
+                    <a href="#" id="QuestionFormBtn"> New Question Form</a>
+                    <input type="text" id="SearchQuestionBar" placeholder="Search Questions.....">
+                </div>
 
-            <div id="questioncontainer">
-                <!-- ye neeche ki 2 lines mne add kri hai Response Form me question Heading and questin display krne le liye --> 
-                <h2 id = "questionHeadingResponseForm"></h3>
-                <p id = "questionResponseForm"></p>
+                <div id = "question-container">
+
+                </div>
             </div>
 
-            <div id="resolvebuttoncontainer">
-                <span id="resolvebutton">Resolve</span>
-              </div>
-             
-              <div id="responses">
-                <span style="color: lightblue; font-size:xx-large;">Response</span>
-                <div id = "response_container">
-                
-                </div>
-              </div>
+            <div class="right">
+                <div id = "Welcome-view">
+                    <h1> Welcome to Discussion Portal !</h1>
+                    <h3 style="color: rgb(4, 4, 4);">Enter a Subject and question to get started </h3>
 
-            <form id="responseform">
-                <h1 style="color: lightblue; font-size: xx-large;">Add Response</h1>
-               
-                <div>
-                    <input type="text" placeholder="Enter Name" id="responsename" required>
+                    <form id="questionForm">
+                        <div>
+                            <input type="text" placeholder="Subject" id="subjectBox" required>
+                        </div>
+
+                        <div>
+                            <textarea id="questionBox" rows="7" cols="62" placeholder="Question" required></textarea>
+                        </div>
+
+                        <div>
+                            <button type="submit" id="submitButton" value="Submit"> Submit </button>
+                        </div>
+                    </form>
+
                 </div>
-                
-                <div>
-                    <textarea rows="7" cols="40" placeholder="Enter Comments" required id="responsecomment"></textarea>
+                <div id = "response-form-view" class="hidden">
+                    <span style="font-size: 30px; color: rgb(52, 189, 235); ">Question</span>
+
+                    <div id = "question-container">
+                        <h3 id = "questionHeading"></h3>
+                        <p id = "question"></p>
+                    </div>
+
+                    <div id = "resolveButtonContainer">
+                       
+                        <span id="resolveButton">Resolve</span>
+                    </div>
+
+                    <div id = "responses">
+                        <span style="font-size: 20px; color: rgb(73, 185, 223)";>Response</span>
+                        <div id = "responseContainer"></div>
+                    </div>
+
+                    <form id="responseform">
+                        <h1 style="font-size: 30px; color: rgb(28, 169, 216); margin-top: 50px;">Add Response</h1>
+                        <div>
+                            <input type="text" placeholder="Enter Name" id="responseName" required>
+                        </div>
+                    
+                        <div>
+                            <textarea id="responseComment" rows="7" cols="62" placeholder="Enter Comment" required></textarea>
+                        </div>
+                    
+                        <button type="submit" id="responseSubmitButton" value="Submit"> Submit </button>
+                    </form>
+                    
                 </div>
-                
-                <button type="submit" id="responsesubmitbutton" value="submit">Submit</button>
-            </form> 
+            </div>
         </div>
- </div>
-        <script src="discussion.js"></script>
-    </body>
+
+    </div>
+
+    <script src="discussion (1).js"> </script>
+</body>
+
 </html>

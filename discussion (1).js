@@ -1,112 +1,175 @@
-const input_box = document.getElementById("inputbox");
-const text_area = document.getElementById("textarea");
-const questionhadding = document.getElementById("question_hadding");
-const question = document.getElementById("addquestion");
-const container = document.getElementById("question_container");
-const welcome_page = document.getElementById("welcome_page");
-const responseform = document.getElementById("response_form");
+const subjectBox = document.getElementById("subjectBox");
+const questionBox = document.getElementById("questionBox");
+const submitBtn = document.getElementById("submitButton");
+const welcomeView = document.getElementById("Welcome-view");
+const questionFormBtn = document.getElementById("QuestionFormBtn");
+const questionContainer = document.getElementById("question-container");
 
-const responseName = document.getElementById("responsename");
-const responseComment = document.getElementById("responsecomment");
+const questionHeadingResponseForm = document.getElementById("questionHeading");
+const questionResponseForm = document.getElementById("question");
 
-function myFunction() {
-    welcome_page.classList.remove("hidden");
-    responseform.classList.add("hidden");
-}
+const responseFormView = document.getElementById("response-form-view");
 
-function submit_question() {
-    if (input_box.value === '') {
-        alert("Enter Question Subject");
 
-    }
-    else if (text_area.value === '') {
-        alert("Enter desired Question");
-    }
-    else {
-        let div = document.createElement("div");
-        let h2 = document.createElement("h2");
-        h2.textContent = input_box.value;
+const responseContainer = document.getElementById("responseContainer");
+const responseName = document.getElementById("responseName");
+const responseComment = document.getElementById("responseComment");
+const responseSubmitButton = document.getElementById("responseSubmitButton");
 
-        let p = document.createElement("p");
-        p.textContent = text_area.value;
+const resolveButton = document.getElementById("resolveButton");
 
-        let bar = document.createElement("hr");
+const Responses = document.getElementById("responses");
 
-        div.appendChild(h2);
-        div.appendChild(p);
-        container.appendChild(div);
-        container.appendChild(bar);
-        input_box.value = '';
-        text_area.value = '';
+questionFormBtn.addEventListener('click',()=>
+{
+    welcomeView.classList.remove("hidden");
+    responseFormView.classList.add("hidden");
+});
 
-        div.addEventListener('click', function () {
-            add_to_right_pane(h2, p);
+submitBtn.addEventListener('click',function(event)
+{
+    if(subjectBox.value !== "" && questionBox.value !== "")
+    {
+        questionContainer.classList.add("questionContainer");
+
+        
+        const questionElement = document.createElement("div");
+        questionElement.className = "questions";
+
+        const questionHeading = document.createElement("h2");
+        questionHeading.classList.add("questionHeading");
+        questionHeading.textContent = subjectBox.value;
+
+        const question = document.createElement("p");
+
+        question.classList.add("question");
+        question.textContent = questionBox.value;
+        
+        const hr =  document.createElement("hr");
+        
+        
+        questionElement.appendChild(questionHeading);
+        questionElement.appendChild(question);
+
+      
+        questionElement.appendChild(hr);
+        questionContainer.appendChild(questionElement);
+        
+        subjectBox.value = "";
+        questionBox.value = "";
+        
+        event.preventDefault();
+
+        const searchBar = document.getElementById("SearchQuestionBar");
+
+        searchBar.addEventListener('input',function()
+        {
+            let searchTerm = searchBar.value.toLocaleLowerCase();
+            const questionElements = document.querySelectorAll(".questions");
+
+            questionElements.forEach((Element) => {
+
+                const questionTitle = Element.querySelector(".questionHeading").innerText.toLowerCase();
+              
+                const questionText = Element.querySelector(".question").innerText.toLowerCase();
+
+                if (questionTitle.includes(searchTerm) || questionText.includes(searchTerm)) 
+                {
+                    Element.style.display="none";
+                } 
+                else 
+                {
+                    Element.style.display = "none";
+                }
+            });
+        }); 
+
+        questionElement.addEventListener('click', function() 
+        {        
+            showResponseForm(questionHeading,question);
         });
+
     }
-}
+});
 
-const questioncontainer_in_response = document.getElementById("questioncontainer");
-
-const rslvbtn = document.getElementById("resolvebutton");
-
-const addResponse = document.getElementById("response_container");
-
-const response_container = document.getElementById("response_container");
-
-const responseSubmit = document.getElementById("responsesubmitbutton");
-
-const h3 = document.getElementById("questionHeadingResponseForm");
-const p = document.getElementById("questionResponseForm");
-
-function add_to_right_pane(questionHeading, question1) {
-    welcome_page.classList.add("hidden");
-    responseform.classList.remove("hidden");
-
-    h3.textContent = questionHeading.textContent;
-
-    p.textContent = question1.textContent;
+function showResponseForm(questionHeading,question)
+{
+    welcomeView.classList.add("hidden");
+    responseFormView.classList.remove("hidden");
 
     var oldData = null;
-    let value = h3.textContent + p.textContent;
+    let value = questionHeading.textContent + question.textContent;
     oldData = localStorage.getItem(value);
-
-    if (oldData !== null) {
-        response_container.innerHTML = oldData;
+    
+    if(oldData !== null)
+    {
+        responseContainer.innerHTML = oldData;
     }
-    else {
-        response_container.innerHTML = "";
+    else
+    {
+        responseContainer.innerHTML = "";
     }
-
-    responseSubmit.addEventListener("click", function (event) {
-        if ((responseName.value !== "") && (responseComment.value !== "")) {
-            event.preventDefault();
-            const div = document.createElement("div");
-            div.id = "Jai3";
-
-            const name = document.createElement("h3");
-
-            const answer = document.createElement("p");
-
-            const hr = document.createElement("hr");
-
-            name.textContent = responseName.value;
-            answer.textContent = responseComment.value;
-
-            div.appendChild(name);
-            div.appendChild(jai2);
-            div.appendChild(answer);
-            response_container.appendChild(div);
-
-            let user = h3.textContent + p.textContent;
-            localStorage.setItem(user, response_container.innerHTML);
-
-            welcome_page.classList.add("hidden");
-            responseform.classList.remove("hidden");
-
-            responseName.value = "";
-            responseComment.value = "";
-        }
-    });
+    questionHeadingResponseForm.textContent = questionHeading.textContent;
+    questionResponseForm.textContent = question.textContent;
 }
 
+resolveButton.addEventListener('click',()=>
+{
+    const questionElements = document.querySelectorAll(".questions");
+    questionElements.forEach((Element) => {
+        var value = questionHeadingResponseForm.textContent + questionResponseForm.textContent;
+        if(Element.textContent === value)
+        {
+            if(confirm("Are Yor Sure?"))
+            {
+                Element.remove();
+                responseContainer.innerHTML = "";
+                localStorage.setItem(value,responseContainer.innerHTML);
+                welcomeView.classList.remove("hidden");
+                responseFormView.classList.add("hidden");
+            }
+        }
+    });
+});
 
+responseSubmitButton.addEventListener('click',(event) =>
+{
+    if(responseName.value !== "" && responseComment.value !== "")
+    {
+        
+        const response = document.createElement("div");
+        
+        response.style.paddingTop = "7px";
+        response.style.paddingLeft = "10px";
+        
+        const name = document.createElement("h4");
+        name.classList.add("responseName1")
+
+        const resp = document.createElement("p");
+        resp.classList.add("responseComment1");
+        const hr = document.createElement("hr");
+
+     
+        name.textContent = responseName.value;
+        resp.textContent = responseComment.value;
+
+        
+        responseName.value = "";
+        responseComment.value = "";
+
+
+       
+        response.appendChild(name);
+        response.appendChild(resp);
+
+        responseContainer.appendChild(response);
+        responseContainer.appendChild(hr); 
+
+        Responses.appendChild(responseContainer);
+
+        var user = questionHeading.textContent + question.textContent;
+            
+        localStorage.setItem(user,responseContainer.innerHTML);
+        event.preventDefault();
+    } 
+});
